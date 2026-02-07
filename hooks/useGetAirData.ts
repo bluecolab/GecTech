@@ -14,5 +14,6 @@ export const useGetAirData = () => {
     return useQuery({
         queryKey: ['airData'],
         queryFn: fetchAirData,
+        refetchInterval: 15 * 60 * 1000,
     });
 };

@@ -1,14 +1,27 @@
+import 'react-native-gesture-handler';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '../global.css';
 
 import { Stack } from 'expo-router';
 
-const queryClient = new QueryClient();
+const queryClient = new QueryClient({
+    defaultOptions: {
+        queries: {
+            // Avoid refetching on every screen focus unless desired
+            refetchOnWindowFocus: false,
+            staleTime: 1000 * 60, // 1 minute by default; screen-level queries can override
+        },
+    },
+});
+
 
 export default function Layout() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <Stack />
-    </QueryClientProvider>
+    <GestureHandlerRootView style={{ flex: 1 }}>
+      <QueryClientProvider client={queryClient}>
+        <Stack />
+      </QueryClientProvider>
+    </GestureHandlerRootView>
   );
 }
