@@ -1,10 +1,10 @@
 {
   "expo": {
-    "name": "GalTechPolicyEnvDisplays",
-    "slug": "GalTechPolicyEnvDisplays",
+    "name": "GecTech",
+    "slug": "GecTech",
     "version": "1.0.0",
 
-    "scheme": "GalTechPolicyEnvDisplays",
+    "scheme": "GecTech",
     "platforms": ["ios", "android","web"],
     "web": {
       "bundler": "metro",
