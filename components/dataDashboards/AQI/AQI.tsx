@@ -8,15 +8,18 @@ export default function AQI() {
     const { data: airData, isLoading: airLoading, error: airError } = useGetAirData();
 
     return (
-        <View>
+        <View className="items-center">
             {airLoading && <Text>Loading...</Text>}
             {airError && <Text>Error loading air data</Text>}
             {airData && (
-                <>
+                <View className="flex-row justify-between">
                     <AQIIndiv airData={airData[1]} />
                     <AQIIndiv airData={airData[0]} />
-                </>
+                </View>
             )}
+            <View className="bg-card   rounded-3xl p-4">
+                <Text className="text-lg font-bold">Data Source:</Text>
+            </View>
         </View>
     )
 

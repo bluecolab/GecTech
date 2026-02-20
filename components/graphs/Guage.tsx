@@ -25,7 +25,7 @@ export default function Gauge({
     return (
         <div className="relative bg-innerCard p-2 rounded-3xl" style={{ width: size, height: size }}>
             <div className="absolute top-1 left-0 right-0 flex justify-center pointer-events-none">
-                <span className="text-lg font-medium">{label}</span>
+                <span className="text-lg font-medium" >{label}</span>
             </div>
             <VictoryPie
                 width={size}
@@ -42,7 +42,7 @@ export default function Gauge({
                 labels={() => null}
             />
             <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
-                <span className="font-bold" style={{ fontSize: Math.max(15, size * 0.28) }}>
+                <span className="font-bold" style={{ fontSize: Math.max(15, size * 0.28),  }}>
                     {value}
                 </span>
             </div>
