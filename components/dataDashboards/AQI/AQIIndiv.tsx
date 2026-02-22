@@ -11,13 +11,6 @@ export default function AQIIndiv({ airData, width }: { airData: AirData, width: 
     const aqiColor = airData ? getAQIColor(airData.purpleAirMapEstimate) : "#E5E7EB";
     const aqiMessage = airData ? getAQIMessage(airData.purpleAirMapEstimate) : { message: "No data available", rate: 'N/A' };
 
-    // airData.temperature
-    // airData.humidity
-    // airData.pressure
-    // airData.purpleAirMapEstimate
-
-    console.log("Air Data:", airData);
-
     return (
         <View className="bg-card m-4 rounded-3xl " style={{ width: width }}>
             <View className="mt-2 items-center">
