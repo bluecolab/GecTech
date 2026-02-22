@@ -29,6 +29,11 @@ jobs:
       - name: 🏗 Setup EAS
         run: npm install -g eas-cli
 
+      - name: Install Python deps
+        run: |
+            python3 -m pip install --upgrade pip
+            python3 -m pip install python-dotenv
+
       - name: 🏗 Install dependencies
         run: npm ci
 
