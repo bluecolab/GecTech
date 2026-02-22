@@ -1,0 +1,83 @@
+name: Expo Prod Build
+run-name: Build of Frontend
+
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch: # Manual trigger
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏗 Setup repo
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 🏗 Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24.x
+
+      - name: Check Node.js and npm version
+        run: |
+          node --version
+          npm --version
+
+      - name: 🏗 Setup EAS
+        run: npm install -g eas-cli
+
+      - name: Install Python deps
+        run: |
+            python3 -m pip install --upgrade pip
+            python3 -m pip install python-dotenv
+
+      - name: 🏗 Install dependencies
+        run: npm ci
+
+      - name: Mask PurpleAir secrets
+        run: |
+          echo "::add-mask::${{ secrets.PURPLEAIR_API_KEY }}"
+          echo "::add-mask::${{ secrets.PURPLEAIR_SENSOR_IDS }}"
+
+      - name: 'Create env file'
+        env:
+          PURPLEAIR_API_KEY: ${{ secrets.PURPLEAIR_API_KEY }}
+          PURPLEAIR_SENSOR_IDS: ${{ secrets.PURPLEAIR_SENSOR_IDS }}
+        run: |
+          printf 'PURPLEAIR_API_KEY=%s\nPURPLEAIR_SENSOR_IDS=%s\n' "$PURPLEAIR_API_KEY" "$PURPLEAIR_SENSOR_IDS" > .env
+
+      - name: Mask EAS project info
+        run: |
+          echo "::add-mask::${{ secrets.EAS_OWNER }}"
+          echo "::add-mask::${{ secrets.EAS_PROJECT_ID }}"
+
+      - name: Append EAS secrets to .env (no printing)
+        env:
+          EAS_OWNER: ${{ secrets.EAS_OWNER }}
+          EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
+        run: |
+          printf 'EAS_OWNER=%s\nEAS_PROJECT_ID=%s\n' "$EAS_OWNER" "$EAS_PROJECT_ID" >> .env
+
+      - name: Inject EAS owner/projectId into app.json (script)
+        env:
+          EAS_OWNER: ${{ secrets.EAS_OWNER }}
+          EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
+        run: python3 scripts/inject_eas_into_appjson.py
+
+      - name: 🚀 EAS Build Web
+        run: npx expo export --platform web
+
+      - name: 📂 Upload build artifacts
+        run: |
+          npx eas deploy --prod --non-interactive
+          python3 scripts/inject_eas_into_appjson.py
+        env:
+          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EAS_OWNER: ${{ secrets.EAS_OWNER }}
+          EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
+ 
+
+   
