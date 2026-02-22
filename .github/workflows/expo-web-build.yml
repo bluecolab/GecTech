@@ -47,10 +47,31 @@ jobs:
       - name: 🚀 EAS Build Web
         run: npx expo export --platform web
 
+      - name: Mask EAS project info
+        run: |
+          echo "::add-mask::${{ secrets.EAS_OWNER }}"
+          echo "::add-mask::${{ secrets.EXPO_PROJECT_ID }}"
+
+      - name: Create temporary eas.json
+        env:
+          EAS_OWNER: ${{ secrets.EAS_OWNER }}
+          EXPO_PROJECT_ID: ${{ secrets.EXPO_PROJECT_ID }}
+        run: |
+          cat > eas.json <<'EOF'
+            {
+            "owner": "${EAS_OWNER}",
+            "projectId": "${EXPO_PROJECT_ID}"
+            }
+            EOF
+
       - name: 📂 Upload build artifacts
-        run: npx eas deploy
+        run: |
+          npx eas deploy --prod --non-interactive
+          rm -f eas.json
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+          EAS_OWNER: ${{ secrets.EAS_OWNER }}
+          EXPO_PROJECT_ID: ${{ secrets.EXPO_PROJECT_ID }}
 
 
    
