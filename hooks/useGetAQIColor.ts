@@ -17,17 +17,35 @@ export function useGetAQIColor() {
 
     const getAQIMessage = (aqi: number) => {
         if (aqi <= 50) {
-            return 'Good - Air quality is satisfactory, and air pollution poses little or no risk.';
+            return {
+                'message': 'Air quality is satisfactory, and air pollution poses little or no risk.',
+                'rate': 'Good'
+            };
         } else if (aqi <= 100) {
-            return 'Moderate - Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.';
+            return {
+                'message': 'Air quality is acceptable; however, for some pollutants there may be a moderate health concern for a very small number of people who are unusually sensitive to air pollution.',
+                'rate': 'Moderate'
+            };
         } else if (aqi <= 150) {
-            return 'Unhealthy for Sensitive Groups - Members of sensitive groups may experience health effects. The general public is not likely to be affected.';
+            return {
+                'message': 'Members of sensitive groups may experience health effects. The general public is not likely to be affected.',
+                'rate': 'Unhealthy for Sensitive Groups'
+            };
         } else if (aqi <= 200) {
-            return 'Unhealthy - Some members of the general public may experience health effects; members of sensitive groups may experience more serious health effects.';
+            return {
+                'message': 'Some members of the general public may experience health effects; members of sensitive groups may experience more serious health effects.',
+                'rate': 'Unhealthy'
+            };
         } else if (aqi <= 300) {
-            return 'Very Unhealthy - Health alert: everyone may experience more serious health effects.';
+            return {
+                'message': 'Health alert: everyone may experience more serious health effects.',
+                'rate': 'Very Unhealthy'
+            };
         } else {
-            return 'Hazardous - Health warnings of emergency conditions. The entire population is more likely to be affected.';
+            return {
+                'message': 'Health warnings of emergency conditions. The entire population is more likely to be affected.',
+                'rate': 'Hazardous'
+            };
         }
     };
 

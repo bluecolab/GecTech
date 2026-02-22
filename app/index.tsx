@@ -29,9 +29,9 @@ export default function Home() {
 
 
   const dashboards = [
-    { id: 'aqi', title: 'Air Quality Index', component: <AQI /> },
-    { id: 'water', title: 'Water Quality Data', component: <Text>Water Quality Data</Text> },
-    { id: 'weather', title: 'Weather Data', component: <Text>Weather Data</Text> },
+    { id: 'aqi', title: 'Air Quality Index', component: <AQI width={windowDimensions.width}/> },
+    // { id: 'water', title: 'Water Quality Data', component: <Text>Water Quality Data</Text> },
+    // { id: 'weather', title: 'Weather Data', component: <Text>Weather Data</Text> },
   ];
 
   return (
@@ -57,11 +57,11 @@ export default function Home() {
         ref={ref}
         onProgressChange={progress}
         onSnapToItem={setCurrentIndex}
-        loop={true}
+        // loop={true}
         snapEnabled={true}
         pagingEnabled={true}
         autoPlayInterval={10000}
-        autoPlay={isAutoplay}
+        // autoPlay={isAutoplay}
         data={dashboards}
         style={{ width: windowDimensions.width, height: windowDimensions.height * 0.775 }}
         width={windowDimensions.width}

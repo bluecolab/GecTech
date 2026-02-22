@@ -9,6 +9,7 @@ type GaugeProps = {
     padAngle: number;
     size: number;
     label: string;
+    rate: string;
 };
 
 export default function Gauge({
@@ -18,7 +19,8 @@ export default function Gauge({
     innerRadius,
     padAngle,
     size,
-    label
+    label,
+    rate
 }: GaugeProps) {
     const remaining = Math.max(0, max - value);
 
@@ -45,6 +47,9 @@ export default function Gauge({
                 <span className="font-bold" style={{ fontSize: Math.max(15, size * 0.28),  }}>
                     {value}
                 </span>
+            </div>
+            <div className="absolute bottom-2 left-0 right-0 flex text-lg justify-center pointer-events-none font-bold" style={{ color: colors[0] }}>
+                {rate}
             </div>
         </div>
     );
