@@ -18,7 +18,7 @@ export default function AQI({width}: {width: number}) {
                 </View>
             )}
             <View className="bg-card rounded-3xl p-4">
-                <Text className="text-lg"><Text className="font-bold">Data Source:</Text> Our local Air Quality Index, part of the federal AirNow program that also issues alerts when air quality threatens human health. </Text>
+                <Text className="text-lg"><Text className="font-bold">What are you seeing?:</Text> Our local Air Quality Index, part of the federal AirNow program that also issues alerts when air quality threatens human health. </Text>
             </View>
         </View>
     )
