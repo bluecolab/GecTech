@@ -63,7 +63,7 @@ export default function Home() {
         autoPlayInterval={10000}
         // autoPlay={isAutoplay}
         data={dashboards}
-        style={{ width: windowDimensions.width, height: windowDimensions.height * 0.775 }}
+        style={{ width: windowDimensions.width, height: windowDimensions.height * 0.7 }}
         width={windowDimensions.width}
         renderItem={({ item, index }) => (
           item.component
@@ -80,20 +80,20 @@ export default function Home() {
 
       <View className="flex-row justify-center items-center mt-4">
         {dashboards.map((d, i) => (
-          <>
+          <View key={d.id} className="flex-row items-center">
             <Text
-              key={d.id}
               className={`text-center text-sm mx-1 ${i === currentIndex ? 'text-black font-bold' : 'text-gray-400'}`}>
               {d.title}
             </Text>
             <Text className={`${i < dashboards.length - 1 ? '' : 'invisible'}`}>
               |
             </Text>
-          </>
+          </View>
         ))}
       </View>
 
       <CurrentTime />
+
       <View className="items-center mt-0">
         <Pressable
           onPress={() => setIsAutoplay(v => !v)}

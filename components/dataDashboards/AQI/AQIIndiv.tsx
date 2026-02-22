@@ -15,14 +15,14 @@ export default function AQIIndiv({ airData, width }: { airData: AirData, width: 
         <View className="bg-card m-4 rounded-3xl " style={{ width: width }}>
             <View className="mt-2 items-center">
                 <Text className="text-lg font-bold">Sensor: {airData.name}</Text>
-                <Text className="text-md text-gray-500 text-center">Last Updated: {new Date(airData.last_seen * 1000).toLocaleTimeString()}</Text>
+                <Text className="text-lg text-gray-500 text-center">Last Updated: {new Date(airData.last_seen * 1000).toLocaleTimeString()}</Text>
             </View>
             <View className="flex-row items-center justify-center w-full p-2 space-x-4">
-                <Gauge value={airData.purpleAirMapEstimate} max={400} colors={[aqiColor, "#a6a6a6"]} innerRadius={80} padAngle={1} size={250} label={"Air Quality Index"} rate={aqiMessage.rate} />
+                <Gauge value={airData.purpleAirMapEstimate} max={400} colors={[aqiColor, "#a6a6a6"]} innerRadius={90} padAngle={1} size={300} label={"Air Quality Index"} rate={aqiMessage.rate} />
                 <Map
                     center={[airData.longitude, airData.latitude]}
                     zoom={14}
-                    height={250}
+                    height={300}
                     markers={[{ id: 'a', coordinates: [airData.longitude, airData.latitude], popup: aqiMessage.message }]}
                 />
             </View>
@@ -39,15 +39,15 @@ export default function AQIIndiv({ airData, width }: { airData: AirData, width: 
 
                 <View className="flex-row mt-3">
                     <View className="flex-1 items-center">
-                        <Text className="text-5xl font-bold">{airData.temperature}</Text>
+                        <Text className="text-6xl font-bold">{airData.temperature}</Text>
                         <Text className="text-lg text-gray-500">Temperature (°F)</Text>
                     </View>
                     <View className="flex-1 items-center">
-                        <Text className="text-5xl font-bold">{airData.humidity}</Text>
+                        <Text className="text-6xl font-bold">{airData.humidity}</Text>
                         <Text className="text-lg text-gray-500">Humidity (%)</Text>
                     </View>
                     <View className="flex-1 items-center">
-                        <Text className="text-5xl font-bold">{airData.pressure}</Text>
+                        <Text className="text-6xl font-bold">{airData.pressure}</Text>
                         <Text className="text-lg text-gray-500">Pressure (hPa)</Text>
                     </View>
                 </View>

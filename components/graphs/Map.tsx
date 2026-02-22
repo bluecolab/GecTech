@@ -125,13 +125,13 @@ export default function Map({ center = [-74.006, 40.7128], zoom = 10, height = 3
 
   if (isWeb) {
     // render a div for maplibre to mount into on web; tailwind classes used for width
-    return <div ref={containerRef} className="w-full rounded-3xl" style={{ height }} />
+    return <div ref={(el: HTMLDivElement | null) => { containerRef.current = el }} className="w-full rounded-3xl" style={{ height }} />
   }
 
   // Native (iOS/Android) placeholder — uses nativewind/tailwind classes
   return (
     <View className="w-full bg-gray-200 items-center justify-center p-3" style={{ height: typeof height === 'string' ? parseInt(height) : height }}>
-      <Text className="text-gray-700 text-center">Map preview available on web. Install react-native-maps for native support.</Text>
+      <Text className="text-gray-700 text-center">Map preview available on web.</Text>
     </View>
   )
 }

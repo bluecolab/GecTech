@@ -17,8 +17,8 @@ export default function AQI({width}: {width: number}) {
                     <AQIIndiv airData={airData[0]} width={width/2 - 40} />
                 </View>
             )}
-            <View className="bg-card rounded-3xl p-4">
-                <Text className="text-lg"><Text className="font-bold">What are you seeing?:</Text> Our local Air Quality Index, part of the federal AirNow program that also issues alerts when air quality threatens human health. </Text>
+            <View className="bg-card rounded-3xl p-4" style={{ width: width - 40}}>
+                <Text className="text-lg"><Text className="font-bold">What are you seeing?</Text> Our local Air Quality Index, part of the federal AirNow program that also issues alerts when air quality threatens human health. </Text>
             </View>
         </View>
     )
