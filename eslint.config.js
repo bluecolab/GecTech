@@ -1,15 +1,70 @@
-/* eslint-env node */
-const { defineConfig } = require('eslint/config');
-const expoConfig = require('eslint-config-expo/flat');
+const pluginImport = require('eslint-plugin-import');
+const path = require('path');
+const tsParser = require('@typescript-eslint/parser');
+const pluginReact = require('eslint-plugin-react');
+const pluginReactHooks = require('eslint-plugin-react-hooks');
+const tseslint = require('@typescript-eslint/eslint-plugin');
 
-module.exports = defineConfig([
-  expoConfig,
+module.exports = [
   {
-    ignores: ['dist/*'],
-  },
-  {
+    files: [
+      'app/**/*.{js,ts,jsx,tsx}',
+      'components/**/*.{js,ts,jsx,tsx}',
+      'contexts/**/*.{js,ts,jsx,tsx}',
+      'hooks/**/*.{js,ts,jsx,tsx}',
+    ],
+    languageOptions: {
+      parser: tsParser,
+      parserOptions: {
+        ecmaVersion: 2022,
+        sourceType: 'module',
+        ecmaFeatures: { jsx: true },
+        project: './tsconfig.json',
+      },
+    },
+    plugins: {
+      import: pluginImport,
+      '@typescript-eslint': tseslint,
+      react: pluginReact,
+      'react-hooks': pluginReactHooks,
+    },
+    settings: {
+      react: { version: 'detect' },
+      'import/resolver': {
+        typescript: {
+          project: path.resolve('./tsconfig.json'),
+        },
+      },
+    },
     rules: {
-      'react/display-name': 'off',
+      // General formatting
+      'no-trailing-spaces': 'warn',
+
+      // Imports
+      'import/no-unresolved': 'error',
+      'import/namespace': 'error',
+      'import/no-duplicates': 'error',
+
+      // React
+      'react/jsx-key': 'error',
+      'react/no-unstable-nested-components': 'error',
+
+      // React Hooks
+      'react-hooks/rules-of-hooks': 'error',
+      'react-hooks/exhaustive-deps': 'error',
+
+      // TypeScript rules
+      'no-unused-vars': 'off',
+      // Enable the TypeScript-specific rule with ignore patterns
+      '@typescript-eslint/no-unused-vars': [
+        'error',
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          caughtErrorsIgnorePattern: '^_',
+        },
+      ],
     },
   },
-]);
+];
