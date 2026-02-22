@@ -51,7 +51,6 @@ jobs:
         run: npx eas deploy
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-        working-directory: ./flight-tracker
 
 
    
