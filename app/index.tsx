@@ -1,5 +1,5 @@
 import { Stack } from 'expo-router';
-import Carousel, { ICarouselInstance, Pagination } from "react-native-reanimated-carousel";
+import Carousel, { ICarouselInstance, Pagination } from 'react-native-reanimated-carousel';
 import { View, Text, Image, Dimensions, Pressable } from 'react-native';
 
 import AQI from '@/components/dataDashboards/AQI/AQI';
@@ -27,9 +27,8 @@ export default function Home() {
     });
   };
 
-
   const dashboards = [
-    { id: 'aqi', title: 'Air Quality Index', component: <AQI width={windowDimensions.width}/> },
+    { id: 'aqi', title: 'Air Quality Index', component: <AQI width={windowDimensions.width} /> },
     // { id: 'water', title: 'Water Quality Data', component: <Text>Water Quality Data</Text> },
     // { id: 'weather', title: 'Weather Data', component: <Text>Weather Data</Text> },
   ];
@@ -40,17 +39,17 @@ export default function Home() {
       <View className="items-center">
         <Image
           source={isDark ? logo : darkLogo}
-          className="w-full mt-4"
+          className="mt-4 w-full"
           style={{ height: 56 }}
           resizeMode="contain"
         />
-        <Text className="mt-2 text-center text-xl font-bold dark:text-darkText">
+        <Text className="dark:text-darkText mt-2 text-center text-xl font-bold">
           Environmental Observatory
         </Text>
       </View>
 
-      <View className='item-center'>
-        <Text className="mt-2 text-center text-xl  font-bold dark:text-darkText">Welcome!</Text>
+      <View className="item-center">
+        <Text className="dark:text-darkText mt-2 text-center  text-xl font-bold">Welcome!</Text>
       </View>
 
       <Carousel
@@ -65,42 +64,37 @@ export default function Home() {
         data={dashboards}
         style={{ width: windowDimensions.width, height: windowDimensions.height * 0.7 }}
         width={windowDimensions.width}
-        renderItem={({ item, index }) => (
-          item.component
-        )} 
+        renderItem={({ item, index }) => item.component}
       />
 
       <Pagination.Basic
         progress={progress}
         data={dashboards}
-        dotStyle={{ backgroundColor: "rgba(0,0,0,0.2)", borderRadius: 50 }}
+        dotStyle={{ backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 50 }}
         containerStyle={{ gap: 5, marginTop: 10 }}
         onPress={onPressPagination}
       />
 
-      <View className="flex-row justify-center items-center mt-4">
+      <View className="mt-4 flex-row items-center justify-center">
         {dashboards.map((d, i) => (
           <View key={d.id} className="flex-row items-center">
             <Text
-              className={`text-center text-sm mx-1 ${i === currentIndex ? 'text-black font-bold' : 'text-gray-400'}`}>
+              className={`mx-1 text-center text-sm ${i === currentIndex ? 'font-bold text-black' : 'text-gray-400'}`}>
               {d.title}
             </Text>
-            <Text className={`${i < dashboards.length - 1 ? '' : 'invisible'}`}>
-              |
-            </Text>
+            <Text className={`${i < dashboards.length - 1 ? '' : 'invisible'}`}>|</Text>
           </View>
         ))}
       </View>
 
       <CurrentTime />
 
-      <View className="items-center mt-0">
+      <View className="mt-0 items-center">
         <Pressable
-          onPress={() => setIsAutoplay(v => !v)}
-          className="p-1 rounded bg-gray-200"
-          accessibilityLabel={isAutoplay ? 'Disable autoplay' : 'Allow autoplay'}
-        >
-          <Text className="text-sm text-center">
+          onPress={() => setIsAutoplay((v) => !v)}
+          className="rounded bg-gray-200 p-1"
+          accessibilityLabel={isAutoplay ? 'Disable autoplay' : 'Allow autoplay'}>
+          <Text className="text-center text-sm">
             {isAutoplay ? 'Disable Autoplay' : 'Allow Autoplay'}
           </Text>
         </Pressable>

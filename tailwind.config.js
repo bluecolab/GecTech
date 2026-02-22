@@ -8,7 +8,7 @@ module.exports = {
       colors: {
         card: '#e0e0e0',
         innerCard: '#fff',
-      }
+      },
     },
   },
   plugins: [],
