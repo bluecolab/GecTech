@@ -50,20 +50,15 @@ jobs:
       - name: Mask EAS project info
         run: |
           echo "::add-mask::${{ secrets.EAS_OWNER }}"
-          echo "::add-mask::${{ secrets.EXPO_PROJECT_ID }}"
+          echo "::add-mask::${{ secrets.EAS_PROJECT_ID }}"
 
       - name: Create temporary eas.json
         env:
           EAS_OWNER: ${{ secrets.EAS_OWNER }}
-          EXPO_PROJECT_ID: ${{ secrets.EXPO_PROJECT_ID }}
+          EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
         run: |
-          cat > eas.json <<
-            {
-            "owner": "${EAS_OWNER}",
-            "projectId": "${EXPO_PROJECT_ID}"
-            }
-            
-
+          printf '{\n  "owner": "%s",\n  "projectId": "%s"\n}\n' "$EAS_OWNER" "$EAS_PROJECT_ID" > eas.json
+          
       - name: 📂 Upload build artifacts
         run: |
           npx eas deploy --prod --non-interactive
@@ -71,7 +66,7 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
           EAS_OWNER: ${{ secrets.EAS_OWNER }}
-          EXPO_PROJECT_ID: ${{ secrets.EXPO_PROJECT_ID }}
-
+          EAS_PROJECT_ID: ${{ secrets.EAS_PROJECT_ID }}
+ 
 
    
