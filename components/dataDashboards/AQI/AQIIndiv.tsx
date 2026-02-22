@@ -35,22 +35,27 @@ export default function AQIIndiv({ airData, width }: { airData: AirData, width: 
             </View>
             <View className="px-4 pb-4">
                 <Text className="text-lg font-bold text-center">What does this mean?</Text>
-                <Text className="text-md text-center">{aqiMessage.message}</Text>
+                <Text className="text-lg text-center mb-3">{aqiMessage.message}</Text>
 
-                
+                <View
+                    style={{
+                        borderBottomColor: 'black',
+                        borderBottomWidth: 1,
+                    }}
+                />
 
                 <View className="flex-row mt-3">
                     <View className="flex-1 items-center">
-                        <Text className="text-5xl font-bold">{airData.temperature}°F</Text>
-                        <Text className="text-lg text-gray-500">Temperature</Text>
+                        <Text className="text-5xl font-bold">{airData.temperature}</Text>
+                        <Text className="text-lg text-gray-500">Temperature (°F)</Text>
                     </View>
                     <View className="flex-1 items-center">
-                        <Text className="text-5xl font-bold">{airData.humidity}%</Text>
-                        <Text className="text-lg text-gray-500">Humidity</Text>
+                        <Text className="text-5xl font-bold">{airData.humidity}</Text>
+                        <Text className="text-lg text-gray-500">Humidity (%)</Text>
                     </View>
                     <View className="flex-1 items-center">
-                        <Text className="text-5xl font-bold">{airData.pressure} hPa</Text>
-                        <Text className="text-lg text-gray-500">Pressure</Text>
+                        <Text className="text-5xl font-bold">{airData.pressure}</Text>
+                        <Text className="text-lg text-gray-500">Pressure (hPa)</Text>
                     </View>
                 </View>
             </View>
