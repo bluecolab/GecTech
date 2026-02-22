@@ -13,6 +13,6 @@ export interface AirData {
         'pm2.5_10minute': number,
         'time_stamp': number,
     },
-    usAQI: number,
-    purpleAirMapEstimate: number,
+    usAQI: number, // as estimated by last data point
+    purpleAirMapEstimate: number, // as seen on purpleair map
 }

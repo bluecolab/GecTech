@@ -14,5 +14,6 @@ export const useGetWeatherData = () => {
     return useQuery({
         queryKey: ['weatherData'],
         queryFn: fetchWeatherData,
+        refetchInterval: 15 * 60 * 1000,
     });
 };

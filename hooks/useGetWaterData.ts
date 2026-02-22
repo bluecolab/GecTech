@@ -14,5 +14,6 @@ export const useGetWaterData = () => {
     return useQuery({
         queryKey: ['waterData'],
         queryFn: fetchWaterData,
+        refetchInterval: 15 * 60 * 1000,
     });
 };
