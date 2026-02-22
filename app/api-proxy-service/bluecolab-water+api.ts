@@ -1,4 +1,4 @@
-const API_URL = 'https://colabprod01.pace.edu/api/influx/sensordata/Alan/delta?days=7'
+const API_URL = 'https://colabprod01.pace.edu/api/influx/sensordata/Alan/delta?days=7';
 const API_TIMEOUT = 10000; // 10 seconds
 
 export async function GET(request: Request) {

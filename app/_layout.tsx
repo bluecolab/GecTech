@@ -5,14 +5,13 @@ import '../global.css';
 import { Stack } from 'expo-router';
 
 const queryClient = new QueryClient({
-    defaultOptions: {
-        queries: {
-            refetchOnWindowFocus: false,
-            staleTime: 1000 * 60, // 1 minute by default; screen-level queries can override
-        },
+  defaultOptions: {
+    queries: {
+      refetchOnWindowFocus: false,
+      staleTime: 1000 * 60, // 1 minute by default; screen-level queries can override
     },
+  },
 });
-
 
 export default function Layout() {
   return (

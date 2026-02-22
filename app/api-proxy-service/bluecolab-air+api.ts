@@ -2,11 +2,11 @@ const API_URL = 'https://api.purpleair.com/v1/sensors';
 const API_TIMEOUT = 10000; // 10 seconds
 
 function aqiFromPM(pm: number): number | string {
-    if (isNaN(pm)) return "-"; 
-    if (pm === undefined) return "-";
-    if (pm < 0) return pm; 
-    if (pm > 1000) return "-"; 
-    /*                                  AQI         RAW PM2.5
+  if (isNaN(pm)) return '-';
+  if (pm === undefined) return '-';
+  if (pm < 0) return pm;
+  if (pm > 1000) return '-';
+  /*                                  AQI         RAW PM2.5
     Good                               0 - 50   |   0.0 – 12.0
     Moderate                          51 - 100  |  12.1 – 35.4
     Unhealthy for Sensitive Groups   101 – 150  |  35.5 – 55.4
@@ -15,30 +15,30 @@ function aqiFromPM(pm: number): number | string {
     Hazardous                        301 – 400  |  250.5 – 350.4
     Hazardous                        401 – 500  |  350.5 – 500.4
     */
-    if (pm > 350.5) {
-        return calcAQI(pm, 500, 401, 500.4, 350.5); //Hazardous
-    } else if (pm > 250.5) {
-        return calcAQI(pm, 400, 301, 350.4, 250.5); //Hazardous
-    } else if (pm > 150.5) {
-        return calcAQI(pm, 300, 201, 250.4, 150.5); //Very Unhealthy
-    } else if (pm > 55.5) {
-        return calcAQI(pm, 200, 151, 150.4, 55.5); //Unhealthy
-    } else if (pm > 35.5) {
-        return calcAQI(pm, 150, 101, 55.4, 35.5); //Unhealthy for Sensitive Groups
-    } else if (pm > 12.1) {
-        return calcAQI(pm, 100, 51, 35.4, 12.1); //Moderate
-    } else if (pm >= 0) {
-        return calcAQI(pm, 50, 0, 12, 0); //Good
-    } else {
-        return '-';
-    }
+  if (pm > 350.5) {
+    return calcAQI(pm, 500, 401, 500.4, 350.5); //Hazardous
+  } else if (pm > 250.5) {
+    return calcAQI(pm, 400, 301, 350.4, 250.5); //Hazardous
+  } else if (pm > 150.5) {
+    return calcAQI(pm, 300, 201, 250.4, 150.5); //Very Unhealthy
+  } else if (pm > 55.5) {
+    return calcAQI(pm, 200, 151, 150.4, 55.5); //Unhealthy
+  } else if (pm > 35.5) {
+    return calcAQI(pm, 150, 101, 55.4, 35.5); //Unhealthy for Sensitive Groups
+  } else if (pm > 12.1) {
+    return calcAQI(pm, 100, 51, 35.4, 12.1); //Moderate
+  } else if (pm >= 0) {
+    return calcAQI(pm, 50, 0, 12, 0); //Good
+  } else {
+    return '-';
+  }
 }
 
 function calcAQI(Cp: number, Ih: number, Il: number, BPh: number, BPl: number) {
-    let a = (Ih - Il);
-    let b = (BPh - BPl);
-    let c = (Cp - BPl);
-    return Math.round((a/b) * c + Il);
+  let a = Ih - Il;
+  let b = BPh - BPl;
+  let c = Cp - BPl;
+  return Math.round((a / b) * c + Il);
 }
 
 async function getSensorData(sensorId: string, API_KEY: string, READ_KEY?: string) {
@@ -48,8 +48,15 @@ async function getSensorData(sensorId: string, API_KEY: string, READ_KEY?: strin
 
   const headers = { 'X-API-Key': API_KEY };
   const fields = [
-    'name', 'latitude', 'longitude', 'pm2.5_atm', 'pm2.5_10minute',
-    'humidity', 'temperature', 'pressure', 'last_seen',
+    'name',
+    'latitude',
+    'longitude',
+    'pm2.5_atm',
+    'pm2.5_10minute',
+    'humidity',
+    'temperature',
+    'pressure',
+    'last_seen',
   ].join(',');
 
   const params = new URLSearchParams({ fields });
@@ -57,12 +64,10 @@ async function getSensorData(sensorId: string, API_KEY: string, READ_KEY?: strin
   const controller = new AbortController();
   const timeout = setTimeout(() => controller.abort(), API_TIMEOUT);
   try {
-    const response = await fetch(`${API_URL}/${sensorId}?${params.toString()}`,
-      {
-        headers,
-        signal: controller.signal,
-      }
-    );
+    const response = await fetch(`${API_URL}/${sensorId}?${params.toString()}`, {
+      headers,
+      signal: controller.signal,
+    });
     clearTimeout(timeout);
     if (!response.ok) {
       return await response.json();
@@ -86,8 +91,7 @@ export async function GET(request: Request) {
   const results = [];
 
   if (sensorId1) {
-
-    const res = await getSensorData(sensorId1, PURPLEAIR_API_KEY, PURPLEAIR_READ_KEY)
+    const res = await getSensorData(sensorId1, PURPLEAIR_API_KEY, PURPLEAIR_READ_KEY);
     const usAQI = aqiFromPM(res['pm2.5_atm']);
     const purpleAirMapEstimate = aqiFromPM(res['stats']['pm2.5_10minute']);
     results.push({ ...res, usAQI, purpleAirMapEstimate });

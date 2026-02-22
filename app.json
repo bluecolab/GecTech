@@ -3,23 +3,14 @@
     "name": "gectech",
     "slug": "gectech",
     "version": "1.0.0",
-    "scheme": [
-      "gectech"
-    ],
-    "platforms": [
-      "ios",
-      "android",
-      "web"
-    ],
+    "scheme": ["gectech"],
+    "platforms": ["ios", "android", "web"],
     "web": {
       "bundler": "metro",
       "output": "server",
       "favicon": "./assets/favicon.png"
     },
-    "plugins": [
-      "expo-router",
-      "expo-font"
-    ],
+    "plugins": ["expo-router", "expo-font"],
     "experiments": {
       "typedRoutes": true,
       "tsconfigPaths": true
@@ -32,9 +23,7 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
+    "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true
     },
