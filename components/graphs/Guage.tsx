@@ -2,61 +2,63 @@
 import { VictoryPie, VictoryTheme } from 'victory';
 
 type GaugeProps = {
-  value: number;
-  max: number;
-  colors: string[];
-  innerRadius: number;
-  padAngle: number;
-  size: number;
-  label: string;
-  rate: string;
+    value: number;
+    max: number;
+    colors: string[];
+    innerRadius: number;
+    padAngle: number;
+    size: number;
+    label: string;
+    rate: string;
+    padding?: number;
 };
 
 export default function Gauge({
-  value,
-  max,
-  colors,
-  innerRadius,
-  padAngle,
-  size,
-  label,
-  rate,
+    value,
+    max,
+    colors,
+    innerRadius,
+    padAngle,
+    size,
+    label,
+    rate,
+    padding = 0,
 }: GaugeProps) {
-  const remaining = Math.max(0, max - value);
+    const remaining = Math.max(0, max - value);
 
-  return (
-    <div
-      className="relative rounded-3xl bg-innerCard p-2 dark:bg-neutral-900"
-      style={{ width: size, height: size }}>
-      <div className="pointer-events-none absolute left-0 right-0 top-1 flex justify-center">
-        <span className="text-2xl font-medium dark:text-neutral-100">{label}</span>
-      </div>
-      <VictoryPie
-        width={size}
-        height={size}
-        padding={0}
-        innerRadius={innerRadius}
-        data={[
-          { x: 'Value', y: value },
-          { x: 'Remaining', y: remaining },
-        ]}
-        colorScale={colors}
-        padAngle={padAngle}
-        theme={VictoryTheme.clean}
-        labels={() => null}
-      />
-      <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <span
-          className="font-bold dark:text-neutral-100"
-          style={{ fontSize: Math.max(15, size * 0.28) }}>
-          {value}
-        </span>
-      </div>
-      <div
-        className="pointer-events-none absolute bottom-2 left-0 right-0 flex justify-center text-2xl font-bold"
-        style={{ color: colors[0] }}>
-        {rate}
-      </div>
-    </div>
-  );
+    return (
+        <div
+            className="relative rounded-3xl bg-innerCard p-2 dark:bg-neutral-900"
+            style={{ width: size, height: size }}>
+            <div className="pointer-events-none absolute left-0 right-0 top-1 flex justify-center">
+                <span className="text-2xl font-medium dark:text-neutral-100">{label}</span>
+            </div>
+            <VictoryPie
+                width={size}
+                height={size}
+                padding={padding}
+                innerRadius={innerRadius}
+                data={[
+                    { x: 'Value', y: value },
+                    { x: 'Remaining', y: remaining },
+                ]}
+                colorScale={colors}
+                padAngle={padAngle}
+                theme={VictoryTheme.clean}
+                labels={() => null}
+            />
+            <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
+                <span
+                    className="font-bold dark:text-neutral-100"
+                    style={{ fontSize: Math.max(15, size * 0.28) }}>
+                    {value}
+                </span>
+            </div>
+            <div
+                className="pointer-events-none absolute bottom-2 left-0 right-0 flex justify-center text-2xl font-bold"
+                style={{ color: colors[0] }}>
+                {rate}
+            </div>
+        </div>
+    );
 }
