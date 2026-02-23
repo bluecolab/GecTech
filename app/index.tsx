@@ -73,7 +73,11 @@ export default function Home() {
       <Pagination.Basic
         progress={progress}
         data={dashboards}
-        dotStyle={{ backgroundColor: 'rgba(0,0,0,0.2)', borderRadius: 50 }}
+        dotStyle={{
+          backgroundColor: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
+          borderRadius: 50,
+        }}
+        activeDotStyle={{ backgroundColor: isDark ? '#f1f1f1' : '#333', borderRadius: 50 }}
         containerStyle={{ gap: 5, marginTop: 10 }}
         onPress={onPressPagination}
       />
@@ -85,7 +89,10 @@ export default function Home() {
               className={`mx-1 text-center text-sm ${i === currentIndex ? 'font-bold text-black dark:text-neutral-100' : 'text-gray-400 dark:text-neutral-500'}`}>
               {d.title}
             </Text>
-            <Text className={`${i < dashboards.length - 1 ? '' : 'invisible'}`}>|</Text>
+            <Text
+              className={`${i < dashboards.length - 1 ? 'dark:text-neutral-100' : 'invisible'}`}>
+              |
+            </Text>
           </View>
         ))}
       </View>

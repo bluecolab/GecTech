@@ -20,7 +20,7 @@ export default function AQI({ width }: { width: number }) {
         <Text className="text-lg dark:text-neutral-100">
           <Text className="font-bold ">What are you seeing?</Text> Our local Air Quality Index, part
           of the federal AirNow program that also issues alerts when air quality threatens human
-          health.{' '}
+          health.
         </Text>
       </View>
     </View>

@@ -1,5 +1,11 @@
+import { View, Text } from 'react-native';
 import { WaterData } from '@/types/WaterData';
+import { extractLastPoint } from '@/utils/extractLastPoint';
 
 export default function WQIIndiv({ waterData, width }: { waterData: WaterData[]; width: number }) {
-  return <></>;
+  console.log(waterData);
+  const lastPoint = extractLastPoint(waterData);
+  console.log(lastPoint);
+
+  return <Text></Text>;
 }
