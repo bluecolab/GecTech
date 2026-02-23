@@ -10,6 +10,9 @@ import { CurrentTime } from '@/components/CurrentTime';
 const darkLogo = require('@/assets/icons/Pace_Black_Centered.png');
 const logo = require('@/assets/icons/Pace_White_Centered.png');
 
+const colabLogo = require('@/assets/icons/logo192.png');
+const gecLogo = require('@/assets/GECTPE-logo-400x65-copy-1.png');
+
 const windowDimensions = Dimensions.get('window');
 
 export default function Home() {
@@ -54,24 +57,32 @@ export default function Home() {
             style={{ height: windowDimensions.height }}>
             <Stack.Screen options={{ headerShown: false }} />
 
-            <View className="absolute right-4 top-4 z-10">
+            <View className="absolute left-4 top-4 z-10 flex-row items-center">
+                <Image source={gecLogo} className="w-full" resizeMode="contain" />
+            </View>
+
+            <View className="absolute right-0 top-4 z-10 w-full items-end pr-4">
+                <Image
+                    source={colabLogo}
+                    className="ml-2"
+                    style={{ height: 65, width: 65 }}
+                    resizeMode="contain"
+                />
+            </View>
+
+            <View className="absolute bottom-4 right-0 z-10 w-full items-end pr-4">
                 <CurrentTime />
             </View>
+
             <View className="items-center">
                 <Image
                     source={isDark ? logo : darkLogo}
                     className="mt-4 w-full"
-                    style={{ height: 56 }}
+                    style={{ height: 80 }}
                     resizeMode="contain"
                 />
-                <Text className="dark:text-darkText mt-2 text-center text-2xl font-bold dark:text-neutral-100">
+                <Text className="dark:text-darkText m-2 text-center text-2xl font-bold dark:text-neutral-100">
                     Environmental Observatory
-                </Text>
-            </View>
-
-            <View className="items-center">
-                <Text className="dark:text-darkText mt-2 text-center text-2xl font-bold dark:text-neutral-100">
-                    Welcome!
                 </Text>
             </View>
 
