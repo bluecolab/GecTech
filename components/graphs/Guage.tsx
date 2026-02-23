@@ -25,9 +25,11 @@ export default function Gauge({
   const remaining = Math.max(0, max - value);
 
   return (
-    <div className="relative rounded-3xl bg-innerCard p-2" style={{ width: size, height: size }}>
+    <div
+      className="relative rounded-3xl bg-innerCard p-2 dark:bg-neutral-900"
+      style={{ width: size, height: size }}>
       <div className="pointer-events-none absolute left-0 right-0 top-1 flex justify-center">
-        <span className="text-2xl font-medium">{label}</span>
+        <span className="text-2xl font-medium dark:text-neutral-100">{label}</span>
       </div>
       <VictoryPie
         width={size}
@@ -44,7 +46,9 @@ export default function Gauge({
         labels={() => null}
       />
       <div className="pointer-events-none absolute inset-0 flex items-center justify-center">
-        <span className="font-bold" style={{ fontSize: Math.max(15, size * 0.28) }}>
+        <span
+          className="font-bold dark:text-neutral-100"
+          style={{ fontSize: Math.max(15, size * 0.28) }}>
           {value}
         </span>
       </div>

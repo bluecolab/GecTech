@@ -12,7 +12,7 @@ export function CurrentTime() {
   }, []);
 
   return (
-    <Text className="dark:text-darkText text-center text-sm">
+    <Text className="dark:text-darkText text-center text-sm dark:text-neutral-100">
       Current Time: {currentTime.toLocaleTimeString()}
     </Text>
   );
