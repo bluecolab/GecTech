@@ -1,12 +1,11 @@
 import { Stack } from 'expo-router';
-import Carousel, { ICarouselInstance, Pagination } from 'react-native-reanimated-carousel';
+import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 import { View, Text, Image, Dimensions, useColorScheme } from 'react-native';
 
 import AQI from '@/components/dataDashboards/AQI/AQI';
 import { useRef, useState } from 'react';
 import { useSharedValue } from 'react-native-reanimated';
 import { CurrentTime } from '@/components/CurrentTime';
-import WQI from '@/components/dataDashboards/WQI/WQI';
 
 const darkLogo = require('@/assets/icons/Pace_Black_Centered.png');
 const logo = require('@/assets/icons/Pace_White_Centered.png');
@@ -19,13 +18,6 @@ export default function Home() {
     const progress = useSharedValue<number>(0);
     const [currentIndex, setCurrentIndex] = useState(0);
 
-    const onPressPagination = (index: number) => {
-        ref.current?.scrollTo({
-            count: index - progress.value,
-            animated: true,
-        });
-    };
-
     const dashboards = [
         {
             id: 'aqi',
@@ -35,14 +27,36 @@ export default function Home() {
         {
             id: 'water',
             title: 'Water Quality Data',
-            component: <WQI width={windowDimensions.width} />,
+            component: (
+                <iframe
+                    className="mt-2"
+                    src="https://colabprod01.pace.edu/grafana/public-dashboards/841327a5d5fa493b8f14d638ffe2041e?orgId=1&from=now-2d&to=now&refresh=15m"
+                    style={{ width: '100%', height: '100%' }}></iframe>
+            ),
         },
-        // { id: 'weather', title: 'Weather Data', component: <Text>Weather Data</Text> },
+        {
+            id: 'weather',
+            title: 'Weather Data',
+            component: (
+                <iframe
+                    className="mt-2"
+                    src="https://colabprod01.pace.edu/grafana/public-dashboards/139d29dc18204fa28d1b39ef672c45f5?orgId=1&from=now-2d&to=now&refresh=15m"
+                    style={{ width: '100%', height: '100%' }}></iframe>
+            ),
+        },
     ];
 
+    console.log(windowDimensions.height);
+
     return (
-        <View className="flex flex-1 bg-white dark:bg-neutral-900">
+        <View
+            className="flex bg-white dark:bg-neutral-900"
+            style={{ height: windowDimensions.height }}>
             <Stack.Screen options={{ headerShown: false }} />
+
+            <View className="absolute right-4 top-4 z-10">
+                <CurrentTime />
+            </View>
             <View className="items-center">
                 <Image
                     source={isDark ? logo : darkLogo}
@@ -50,65 +64,51 @@ export default function Home() {
                     style={{ height: 56 }}
                     resizeMode="contain"
                 />
-                <Text className="dark:text-darkText mt-2 text-center text-xl font-bold dark:text-neutral-100">
+                <Text className="dark:text-darkText mt-2 text-center text-2xl font-bold dark:text-neutral-100">
                     Environmental Observatory
                 </Text>
             </View>
 
-            <View className="item-center">
-                <Text className="dark:text-darkText mt-2 text-center  text-xl font-bold dark:text-neutral-100">
+            <View className="items-center">
+                <Text className="dark:text-darkText mt-2 text-center text-2xl font-bold dark:text-neutral-100">
                     Welcome!
                 </Text>
             </View>
 
-            <Carousel
-                ref={ref}
-                onProgressChange={progress}
-                onSnapToItem={setCurrentIndex}
-                // loop={true}
-                snapEnabled={true}
-                pagingEnabled={true}
-                autoPlayInterval={10000}
-                // autoPlay={isAutoplay}
-                data={dashboards}
-                style={{ width: windowDimensions.width, height: windowDimensions.height * 0.75 }}
-                width={windowDimensions.width}
-                // eslint-disable-next-line @typescript-eslint/no-unused-vars
-                renderItem={({ item, index }) => item.component}
-            />
+            <View className="flex-row items-center justify-center">
+                {dashboards.map((d, i) => (
+                    <View key={d.id} className="flex-row items-center dark:text-neutral-100">
+                        <Text
+                            className={`mx-1 text-center text-xl ${i === currentIndex ? 'font-bold text-black dark:text-neutral-100' : 'text-gray-400 dark:text-neutral-500'}`}>
+                            {d.title}
+                        </Text>
+                        <Text
+                            className={`${i < dashboards.length - 1 ? 'dark:text-neutral-100' : 'invisible'}`}>
+                            |
+                        </Text>
+                    </View>
+                ))}
+            </View>
 
-            <View className="absolute bottom-0 mb-2 w-full items-center justify-center">
-                <Pagination.Basic
-                    progress={progress}
+            <View className="flex-1" style={{ width: windowDimensions.width }}>
+                <Carousel
+                    ref={ref}
+                    onProgressChange={progress}
+                    onSnapToItem={setCurrentIndex}
+                    loop={true}
+                    snapEnabled={true}
+                    pagingEnabled={true}
+                    autoPlayInterval={10000}
+                    autoPlay={true}
                     data={dashboards}
-                    dotStyle={{
-                        backgroundColor: isDark ? 'rgba(255,255,255,0.2)' : 'rgba(0,0,0,0.2)',
-                        borderRadius: 50,
-                    }}
-                    activeDotStyle={{
-                        backgroundColor: isDark ? '#f1f1f1' : '#333',
-                        borderRadius: 50,
-                    }}
-                    containerStyle={{ gap: 5, marginTop: 10 }}
-                    onPress={onPressPagination}
-                />
-
-                <View className="flex-row items-center justify-center">
-                    {dashboards.map((d, i) => (
-                        <View key={d.id} className="flex-row items-center dark:text-neutral-100">
-                            <Text
-                                className={`mx-1 text-center text-base ${i === currentIndex ? 'font-bold text-black dark:text-neutral-100' : 'text-gray-400 dark:text-neutral-500'}`}>
-                                {d.title}
-                            </Text>
-                            <Text
-                                className={`${i < dashboards.length - 1 ? 'dark:text-neutral-100' : 'invisible'}`}>
-                                |
-                            </Text>
+                    style={{ width: windowDimensions.width, height: windowDimensions.height }}
+                    width={windowDimensions.width}
+                    renderItem={({ item }) => (
+                        <View pointerEvents="none" style={{ width: '100%', height: '100%' }}>
+                            {item.component}
                         </View>
-                    ))}
-                </View>
-
-                <CurrentTime />
+                    )}
+                />
             </View>
         </View>
     );
