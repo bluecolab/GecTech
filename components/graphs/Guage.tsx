@@ -10,6 +10,7 @@ type GaugeProps = {
     size: number;
     label: string;
     rate: string;
+    padding?: number;
 };
 
 export default function Gauge({
@@ -21,6 +22,7 @@ export default function Gauge({
     size,
     label,
     rate,
+    padding = 0,
 }: GaugeProps) {
     const remaining = Math.max(0, max - value);
 
@@ -34,7 +36,7 @@ export default function Gauge({
             <VictoryPie
                 width={size}
                 height={size}
-                padding={0}
+                padding={padding}
                 innerRadius={innerRadius}
                 data={[
                     { x: 'Value', y: value },

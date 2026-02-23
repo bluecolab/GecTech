@@ -20,7 +20,11 @@ export default function AQIIndiv({ airData, width }: { airData: AirData; width: 
                     Sensor: {airData.name}
                 </Text>
                 <Text className="text-center text-lg text-gray-500 dark:text-gray-300">
-                    Last Updated: {new Date(airData.last_seen * 1000).toLocaleTimeString()}
+                    Latest Data Point: {new Date(airData.last_seen * 1000).toLocaleString()} -{' '}
+                    {Math.floor(
+                        (Date.now() - new Date(airData.last_seen * 1000).getTime()) / 1000 / 60
+                    )}{' '}
+                    minute(s) ago
                 </Text>
             </View>
             <View className="w-full flex-row items-center justify-center space-x-4 p-2">

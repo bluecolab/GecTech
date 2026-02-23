@@ -7,12 +7,12 @@ export function CurrentTime() {
     useEffect(() => {
         const timer = setInterval(() => {
             setCurrentTime(new Date());
-        }, 500);
+        }, 1000);
         return () => clearInterval(timer);
     }, []);
 
     return (
-        <Text className="dark:text-darkText text-center text-sm dark:text-neutral-100">
+        <Text className="dark:text-darkText text-center text-base dark:text-neutral-100">
             Current Time: {currentTime.toLocaleTimeString()}
         </Text>
     );

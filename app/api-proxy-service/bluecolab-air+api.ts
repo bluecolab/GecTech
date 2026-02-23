@@ -85,6 +85,38 @@ export async function GET(_: Request) {
     const PURPLEAIR_API_KEY = process.env.PURPLEAIR_API_KEY ?? '';
     const PURPLEAIR_READ_KEY = process.env.PURPLEAIR_READ_KEY ?? '';
     const PURPLEAIR_SENSOR_IDS = process.env.PURPLEAIR_SENSOR_IDS?.split(',') || [];
+    const MOCK_DATA = process.env.MOCK_DATA === 'true';
+
+    if (MOCK_DATA) {
+        return Response.json([
+            {
+                name: 'Mock Sensor 1',
+                latitude: 0,
+                longitude: 0,
+                'pm2.5_atm': 0,
+                stats: { 'pm2.5_10minute': 0 },
+                last_seen: 0,
+                usAQI: aqiFromPM(0),
+                purpleAirMapEstimate: aqiFromPM(0),
+                humidity: 0,
+                temperature: 0,
+                pressure: 0,
+            },
+            {
+                name: 'Mock Sensor 2',
+                latitude: 0,
+                longitude: 0,
+                'pm2.5_atm': 0,
+                stats: { 'pm2.5_10minute': 0 },
+                last_seen: 0,
+                usAQI: aqiFromPM(0),
+                purpleAirMapEstimate: aqiFromPM(0),
+                humidity: 0,
+                temperature: 0,
+                pressure: 0,
+            },
+        ]);
+    }
 
     // Only take the first two sensor IDs if more are present
     const [sensorId1, sensorId2] = PURPLEAIR_SENSOR_IDS;

@@ -11,3 +11,13 @@ export interface WaterData {
         pH: number;
     };
 }
+
+export interface FlattenedWaterData {
+    timestamp: string;
+    Cond: number;
+    DOpct: number;
+    Sal: number;
+    Temp: number;
+    Turb: number;
+    pH: number;
+}

@@ -20,3 +20,22 @@ export interface WeatherData {
         WindSpeed: number;
     };
 }
+
+export interface FlattenedWeatherData {
+    timestamp: string;
+    AirTemp: number;
+    BaroPressure: number;
+    DistLightning: number;
+    LightningStrikes: number;
+    MaxWindSpeed: number;
+    Rain: number;
+    RelHumid: number;
+    RelHumidTemp: number;
+    SolarFlux: number;
+    SolarTotalFlux: number;
+    TiltNS: number;
+    TiltWE: number;
+    VaporPressure: number;
+    WindDir: number;
+    WindSpeed: number;
+}
