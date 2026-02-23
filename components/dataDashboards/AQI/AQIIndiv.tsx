@@ -1,4 +1,4 @@
-import { View, Text } from 'react-native';
+import { View, Text, useColorScheme } from 'react-native';
 
 import { useGetAQIColor } from '@/hooks/useGetAQIColor';
 import { AirData } from '@/types/AirData';
@@ -7,6 +7,7 @@ import Map from '@/components/graphs/Map';
 
 export default function AQIIndiv({ airData, width }: { airData: AirData; width: number }) {
     const { getAQIColor, getAQIMessage } = useGetAQIColor();
+    const isDark = useColorScheme() === 'dark';
 
     const aqiColor = airData ? getAQIColor(airData.purpleAirMapEstimate) : '#E5E7EB';
     const aqiMessage = airData
@@ -49,7 +50,7 @@ export default function AQIIndiv({ airData, width }: { airData: AirData; width: 
                             popup: aqiMessage.message,
                         },
                     ]}
-                    isDark={false}
+                    isDark={isDark}
                 />
             </View>
             <View className="px-4 pb-4">
