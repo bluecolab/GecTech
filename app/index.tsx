@@ -1,6 +1,6 @@
 import { Stack } from 'expo-router';
 import Carousel, { ICarouselInstance, Pagination } from 'react-native-reanimated-carousel';
-import { View, Text, Image, Dimensions, Pressable } from 'react-native';
+import { View, Text, Image, Dimensions, Pressable, useColorScheme } from 'react-native';
 
 import AQI from '@/components/dataDashboards/AQI/AQI';
 import { useRef, useState } from 'react';
@@ -8,13 +8,12 @@ import { useSharedValue } from 'react-native-reanimated';
 import { CurrentTime } from '@/components/CurrentTime';
 
 const darkLogo = require('@/assets/icons/Pace_Black_Centered.png');
-const logo = require('@/assets/icons/Pace_White_KO_Centered.png');
+const logo = require('@/assets/icons/Pace_White_Centered.png');
 
 const windowDimensions = Dimensions.get('window');
 
 export default function Home() {
-  const isDark = false;
-
+  const isDark = useColorScheme() === 'dark';
   const ref = useRef<ICarouselInstance>(null);
   const progress = useSharedValue<number>(0);
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -34,7 +33,7 @@ export default function Home() {
   ];
 
   return (
-    <View className="flex flex-1 bg-white">
+    <View className="flex flex-1 bg-white dark:bg-neutral-900">
       <Stack.Screen options={{ headerShown: false }} />
       <View className="items-center">
         <Image
@@ -43,13 +42,15 @@ export default function Home() {
           style={{ height: 56 }}
           resizeMode="contain"
         />
-        <Text className="dark:text-darkText mt-2 text-center text-xl font-bold">
+        <Text className="dark:text-darkText mt-2 text-center text-xl font-bold dark:text-neutral-100">
           Environmental Observatory
         </Text>
       </View>
 
       <View className="item-center">
-        <Text className="dark:text-darkText mt-2 text-center  text-xl font-bold">Welcome!</Text>
+        <Text className="dark:text-darkText mt-2 text-center  text-xl font-bold dark:text-neutral-100">
+          Welcome!
+        </Text>
       </View>
 
       <Carousel
@@ -64,6 +65,7 @@ export default function Home() {
         data={dashboards}
         style={{ width: windowDimensions.width, height: windowDimensions.height * 0.7 }}
         width={windowDimensions.width}
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
         renderItem={({ item, index }) => item.component}
       />
 
@@ -77,9 +79,9 @@ export default function Home() {
 
       <View className="mt-4 flex-row items-center justify-center">
         {dashboards.map((d, i) => (
-          <View key={d.id} className="flex-row items-center">
+          <View key={d.id} className="flex-row items-center dark:text-neutral-100">
             <Text
-              className={`mx-1 text-center text-sm ${i === currentIndex ? 'font-bold text-black' : 'text-gray-400'}`}>
+              className={`mx-1 text-center text-sm ${i === currentIndex ? 'font-bold text-black dark:text-neutral-100' : 'text-gray-400 dark:text-neutral-500'}`}>
               {d.title}
             </Text>
             <Text className={`${i < dashboards.length - 1 ? '' : 'invisible'}`}>|</Text>
