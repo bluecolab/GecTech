@@ -41,7 +41,7 @@ function calcAQI(Cp: number, Ih: number, Il: number, BPh: number, BPl: number) {
   return Math.round((a / b) * c + Il);
 }
 
-async function getSensorData(sensorId: string, API_KEY: string, READ_KEY?: string) {
+async function getSensorData(sensorId: string, API_KEY: string, _READ_KEY?: string) {
   if (!API_KEY) {
     return null;
   }
@@ -81,7 +81,7 @@ async function getSensorData(sensorId: string, API_KEY: string, READ_KEY?: strin
   }
 }
 
-export async function GET(request: Request) {
+export async function GET(_: Request) {
   const PURPLEAIR_API_KEY = process.env.PURPLEAIR_API_KEY ?? '';
   const PURPLEAIR_READ_KEY = process.env.PURPLEAIR_READ_KEY ?? '';
   const PURPLEAIR_SENSOR_IDS = process.env.PURPLEAIR_SENSOR_IDS?.split(',') || [];

@@ -6,6 +6,7 @@ import AQI from '@/components/dataDashboards/AQI/AQI';
 import { useRef, useState } from 'react';
 import { useSharedValue } from 'react-native-reanimated';
 import { CurrentTime } from '@/components/CurrentTime';
+import WQI from '@/components/dataDashboards/WQI/WQI';
 
 const darkLogo = require('@/assets/icons/Pace_Black_Centered.png');
 const logo = require('@/assets/icons/Pace_White_Centered.png');
@@ -28,7 +29,7 @@ export default function Home() {
 
   const dashboards = [
     { id: 'aqi', title: 'Air Quality Index', component: <AQI width={windowDimensions.width} /> },
-    // { id: 'water', title: 'Water Quality Data', component: <Text>Water Quality Data</Text> },
+    { id: 'water', title: 'Water Quality Data', component: <WQI width={windowDimensions.width} /> },
     // { id: 'weather', title: 'Weather Data', component: <Text>Weather Data</Text> },
   ];
 
