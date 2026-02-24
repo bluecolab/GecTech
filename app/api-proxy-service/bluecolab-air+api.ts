@@ -81,11 +81,26 @@ async function getSensorData(sensorId: string, API_KEY: string, _READ_KEY?: stri
     }
 }
 
-export async function GET(_: Request) {
+export async function GET(req: Request) {
+    const API_KEY = process.env.X_API_KEY ?? '';
     const PURPLEAIR_API_KEY = process.env.PURPLEAIR_API_KEY ?? '';
     const PURPLEAIR_READ_KEY = process.env.PURPLEAIR_READ_KEY ?? '';
     const PURPLEAIR_SENSOR_IDS = process.env.PURPLEAIR_SENSOR_IDS?.split(',') || [];
     const MOCK_DATA = process.env.MOCK_DATA === 'true';
+
+    if (API_KEY) {
+        const authHeader = req.headers.get('x-api-key') || '';
+
+        if (authHeader !== API_KEY) {
+            return Response.json(
+                {
+                    error: 'Invalid API key - we are students, why are you trying to be uncool.',
+                },
+                { status: 401 }
+            );
+        }
+    }
+    // if api key is missing it's local dev...so no checks needed
 
     if (MOCK_DATA) {
         return Response.json([
