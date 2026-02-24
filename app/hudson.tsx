@@ -1,3 +1,4 @@
+'use client';
 import { Stack } from 'expo-router';
 import { useRef, useState } from 'react';
 import { Dimensions, View, Text } from 'react-native';

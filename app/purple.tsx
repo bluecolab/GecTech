@@ -1,3 +1,4 @@
+'use client';
 import AQIIndiv from '@/components/dataDashboards/AQI/AQIIndiv';
 import { useGetAirData } from '@/hooks/useGetAirData';
 import { Stack } from 'expo-router';
