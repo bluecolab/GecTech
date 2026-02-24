@@ -1,6 +1,7 @@
+'use client';
 import { Stack } from 'expo-router';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
-import { View, Text, Image, Dimensions, useColorScheme } from 'react-native';
+import { View, Text, Image, useWindowDimensions, useColorScheme } from 'react-native';
 
 import AQI from '@/components/dataDashboards/AQI/AQI';
 import { useRef, useState } from 'react';
@@ -13,10 +14,11 @@ const logo = require('@/assets/icons/Pace_White_Centered.png');
 const colabLogo = require('@/assets/icons/logo192.png');
 const gecLogo = require('@/assets/GECTPE-logo-400x65-copy-1.png');
 
-const windowDimensions = Dimensions.get('window');
-
 export default function Home() {
     const isDark = useColorScheme() === 'dark';
+    const windowDimensions = useWindowDimensions();
+    const effectiveWidth = windowDimensions.width || 1024;
+    const effectiveHeight = windowDimensions.height || 800;
     const ref = useRef<ICarouselInstance>(null);
     const progress = useSharedValue<number>(0);
     const [currentIndex, setCurrentIndex] = useState(0);
@@ -51,8 +53,8 @@ export default function Home() {
 
     return (
         <View
-            className="flex bg-white dark:bg-neutral-900"
-            style={{ height: windowDimensions.height }}>
+            className="flex min-h-screen bg-white dark:bg-neutral-900"
+            style={{ minHeight: effectiveHeight }}>
             <Stack.Screen options={{ headerShown: false }} />
 
             <View className="absolute left-4 top-4 z-10 flex-row items-center">
@@ -99,7 +101,7 @@ export default function Home() {
                 ))}
             </View>
 
-            <View className="flex-1" style={{ width: windowDimensions.width }}>
+            <View className="flex-1" style={{ width: effectiveWidth }}>
                 <Carousel
                     ref={ref}
                     onProgressChange={progress}
@@ -110,8 +112,8 @@ export default function Home() {
                     autoPlayInterval={10000}
                     autoPlay={true}
                     data={dashboards}
-                    style={{ width: windowDimensions.width, height: windowDimensions.height }}
-                    width={windowDimensions.width}
+                    style={{ width: effectiveWidth, height: effectiveHeight }}
+                    width={effectiveWidth}
                     renderItem={({ item }) => (
                         <View pointerEvents="none" style={{ width: '100%', height: '100%' }}>
                             {item.component}

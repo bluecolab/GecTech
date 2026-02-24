@@ -1,13 +1,16 @@
 'use client';
 import { Stack } from 'expo-router';
 import { useRef, useState } from 'react';
-import { Dimensions, View, Text } from 'react-native';
+import { useWindowDimensions, View, Text } from 'react-native';
 import { useSharedValue } from 'react-native-reanimated';
 import Carousel, { ICarouselInstance } from 'react-native-reanimated-carousel';
 
-const windowDimensions = Dimensions.get('window');
-
 export default function Hudson() {
+    const windowDimensions = useWindowDimensions();
+    const effectiveWidth =
+        windowDimensions.width || window.innerWidth != 0 ? window.innerWidth : 1024;
+    const effectiveHeight =
+        windowDimensions.height || window.innerHeight != 0 ? window.innerHeight : 800;
     const [currentIndex, setCurrentIndex] = useState(0);
     const progress = useSharedValue<number>(0);
     const ref = useRef<ICarouselInstance>(null);
@@ -32,8 +35,8 @@ export default function Hudson() {
 
     return (
         <View
-            className="flex bg-white dark:bg-neutral-900"
-            style={{ height: windowDimensions.height }}>
+            className="flex min-h-screen bg-white dark:bg-neutral-900"
+            style={{ minHeight: effectiveHeight }}>
             <Stack.Screen options={{ headerShown: false }} />
 
             <View className="flex-row items-center justify-center">
@@ -61,8 +64,8 @@ export default function Hudson() {
                 autoPlayInterval={10000}
                 autoPlay={true}
                 data={locations}
-                style={{ width: windowDimensions.width, height: windowDimensions.height }}
-                width={windowDimensions.width}
+                style={{ width: effectiveWidth, height: effectiveHeight }}
+                width={effectiveWidth}
                 renderItem={({ item }) => (
                     <iframe
                         src={item.src}
