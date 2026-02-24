@@ -5,8 +5,9 @@ const fetchAirData = async (): Promise<AirData[]> => {
     let localStored = localStorage.getItem('apiKey');
 
     if (!localStored) {
-        localStored = prompt('Enter API Key:') || '';
+        localStored = prompt('Enter GEC API Key - NOT PurpleAir API key:') || '';
         localStorage.setItem('apiKey', localStored);
+        console.log('API Key is shared internally, ask Kenji if you need it');
     }
 
     const response = await fetch('/api-proxy-service/bluecolab-air', {
