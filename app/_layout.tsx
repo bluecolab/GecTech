@@ -1,3 +1,4 @@
+'use client';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useColorScheme as useColorSchemeRN } from 'react-native';
 import { useEffect, useRef } from 'react';
