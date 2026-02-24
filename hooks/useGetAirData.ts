@@ -2,7 +2,18 @@ import { useQuery } from '@tanstack/react-query';
 import { AirData } from '@/types/AirData';
 
 const fetchAirData = async (): Promise<AirData[]> => {
-    const response = await fetch('/api-proxy-service/bluecolab-air');
+    let localStored = localStorage.getItem('apiKey');
+
+    if (!localStored) {
+        localStored = prompt('Enter API Key:') || '';
+        localStorage.setItem('apiKey', localStored);
+    }
+
+    const response = await fetch('/api-proxy-service/bluecolab-air', {
+        headers: {
+            'x-api-key': localStored || '',
+        },
+    });
     if (!response.ok) {
         throw new Error('Network response was not ok');
     }
