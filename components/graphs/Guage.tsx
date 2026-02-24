@@ -31,7 +31,9 @@ export default function Gauge({
             className="relative rounded-3xl bg-innerCard p-2 dark:bg-neutral-900"
             style={{ width: size, height: size }}>
             <div className="pointer-events-none absolute left-0 right-0 top-1 flex justify-center">
-                <span className="text-2xl font-medium dark:text-neutral-100">{label}</span>
+                <span className="text-center text-2xl font-medium dark:text-neutral-100">
+                    {label}
+                </span>
             </div>
             <VictoryPie
                 width={size}

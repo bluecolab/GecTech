@@ -1,10 +1,10 @@
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { useColorScheme as useColorSchemeRN } from 'react-native';
+import { useEffect, useRef } from 'react';
 import { useColorScheme } from 'nativewind';
+import { useGlobalSearchParams, Stack } from 'expo-router';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import '../global.css';
-
-import { Stack } from 'expo-router';
 
 const queryClient = new QueryClient({
     defaultOptions: {
@@ -16,10 +16,22 @@ const queryClient = new QueryClient({
 });
 
 export default function Layout() {
-    // Update Nativewind Dark Scheme
     const { setColorScheme } = useColorScheme();
-    const coloScheme = useColorSchemeRN() === 'dark' ? 'dark' : 'light';
-    setColorScheme(coloScheme);
+
+    // Take dark mode preference from URL param (darkMode=true/false) or system setting, with URL param taking precedence
+    const params = useGlobalSearchParams<{ darkMode?: string }>();
+    const paramScheme =
+        params.darkMode === 'true' ? 'dark' : params.darkMode === 'false' ? 'light' : undefined;
+    const systemScheme = useColorSchemeRN() === 'dark' ? 'dark' : 'light';
+    const coloScheme = paramScheme ?? systemScheme;
+
+    const lastApplied = useRef<string | null>(null);
+    useEffect(() => {
+        if (lastApplied.current !== coloScheme) {
+            setColorScheme(coloScheme);
+            lastApplied.current = coloScheme;
+        }
+    }, [coloScheme, setColorScheme]);
 
     return (
         <GestureHandlerRootView style={{ flex: 1 }}>
