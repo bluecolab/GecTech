@@ -49,8 +49,6 @@ export default function Home() {
         },
     ];
 
-    console.log(windowDimensions.height);
-
     return (
         <View
             className="flex bg-white dark:bg-neutral-900"
