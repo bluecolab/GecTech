@@ -2,13 +2,12 @@
 import AQIIndiv from '@/components/dataDashboards/AQI/AQIIndiv';
 import { useGetAirData } from '@/hooks/useGetAirData';
 
-import { Stack, useGlobalSearchParams } from 'expo-router';
+import { Stack } from 'expo-router';
 import { useWindowDimensions, View, Text } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 export default function Purple() {
-    const { xApiKey } = useGlobalSearchParams<{ xApiKey: string }>();
-    const { data: airData, isLoading: airLoading, error: airError } = useGetAirData(xApiKey);
+    const { data: airData, isLoading: airLoading, error: airError } = useGetAirData();
     const windowDimensions = useWindowDimensions();
 
     const effectiveWidth =
