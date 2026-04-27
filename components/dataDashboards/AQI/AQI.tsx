@@ -2,11 +2,9 @@ import { View, Text } from 'react-native';
 
 import { useGetAirData } from '@/hooks/useGetAirData';
 import AQIIndiv from './AQIIndiv';
-import { useGlobalSearchParams } from 'expo-router';
 
 export default function AQI({ width }: { width: number }) {
-    const { xApiKey } = useGlobalSearchParams<{ xApiKey: string }>();
-    const { data: airData, isLoading: airLoading, error: airError } = useGetAirData(xApiKey);
+    const { data: airData, isLoading: airLoading, error: airError } = useGetAirData();
 
     return (
         <View className="items-center">
