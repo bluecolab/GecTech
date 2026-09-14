@@ -35,7 +35,7 @@ export default function Home() {
             component: (
                 <iframe
                     className="mt-2"
-                    src="https://colabprod01.pace.edu/grafana/public-dashboards/841327a5d5fa493b8f14d638ffe2041e?orgId=1&from=now-2d&to=now&refresh=15m"
+                    src="https://colabprod01.pace.edu/grafana/public-dashboards/36eb7ce712074b4e88518d4d48b44a16"
                     style={{ width: '100%', height: '100%' }}></iframe>
             ),
         },
@@ -45,7 +45,7 @@ export default function Home() {
             component: (
                 <iframe
                     className="mt-2"
-                    src="https://colabprod01.pace.edu/grafana/public-dashboards/139d29dc18204fa28d1b39ef672c45f5?orgId=1&from=now-2d&to=now&refresh=15m"
+                    src="https://colabprod01.pace.edu/grafana/public-dashboards/a7650075b40145ff95085bf75bc4d0b5"
                     style={{ width: '100%', height: '100%' }}></iframe>
             ),
         },
