@@ -17,28 +17,29 @@ export default function AQIIndiv({
     const { getAQIColor, getAQIMessage } = useGetAQIColor();
     const isDark = useColorScheme() === 'dark';
 
-    const aqiColor = airData ? getAQIColor(airData.purpleAirMapEstimate) : '#E5E7EB';
-    const aqiMessage = airData
-        ? getAQIMessage(airData.purpleAirMapEstimate)
-        : { message: 'No data available', rate: 'N/A' };
+    const usAQI =
+        airData.sensors.us_aqi && typeof airData.sensors.us_aqi === 'number'
+            ? airData.sensors.us_aqi
+            : null;
+
+    const aqiColor = usAQI ? getAQIColor(usAQI) : '#E5E7EB';
+    const aqiMessage = usAQI ? getAQIMessage(usAQI) : { message: 'No data available', rate: 'N/A' };
 
     return (
         <View className="m-4 rounded-3xl bg-card dark:bg-neutral-700" style={{ width: width }}>
             <View className="mt-2 items-center">
                 <Text className="text-lg font-bold dark:text-neutral-100">
-                    Sensor: {airData.name}
+                    Sensor: {airData.station}
                 </Text>
                 <Text className="text-center text-lg text-gray-500 dark:text-gray-300">
-                    Latest Data Point: {new Date(airData.last_seen * 1000).toLocaleString()} -{' '}
-                    {Math.floor(
-                        (Date.now() - new Date(airData.last_seen * 1000).getTime()) / 1000 / 60
-                    )}{' '}
+                    Latest Data Point: {new Date(airData.time).toLocaleString()} -{' '}
+                    {Math.floor((Date.now() - new Date(airData.time).getTime()) / 1000 / 60)}{' '}
                     minute(s) ago
                 </Text>
             </View>
             <View className="w-full flex-row items-center justify-center space-x-4 p-2">
                 <Gauge
-                    value={airData.purpleAirMapEstimate}
+                    value={usAQI ? usAQI : -1}
                     max={400}
                     colors={[aqiColor, '#a6a6a6']}
                     innerRadius={aqiOnly ? 79 : 90}
@@ -50,13 +51,16 @@ export default function AQIIndiv({
                 />
                 {!aqiOnly && (
                     <Map
-                        center={[airData.longitude, airData.latitude]}
+                        center={[airData.location.longitude, airData.location.latitude]}
                         zoom={14}
                         height={300}
                         markers={[
                             {
                                 id: 'a',
-                                coordinates: [airData.longitude, airData.latitude],
+                                coordinates: [
+                                    airData.location.longitude,
+                                    airData.location.latitude,
+                                ],
                                 popup: aqiMessage.message,
                             },
                         ]}
@@ -83,7 +87,7 @@ export default function AQIIndiv({
                     <View className="mt-3 flex-col md:flex-row">
                         <View className="flex-1 items-center">
                             <Text className="text-6xl font-bold dark:text-neutral-100">
-                                {airData.temperature}
+                                {airData.sensors.temperature}
                             </Text>
                             <Text className="text-center text-lg text-gray-500 dark:text-gray-300">
                                 Temperature (°F)
@@ -91,7 +95,7 @@ export default function AQIIndiv({
                         </View>
                         <View className="flex-1 items-center">
                             <Text className="text-6xl font-bold dark:text-neutral-100">
-                                {airData.humidity}
+                                {airData.sensors.humidity}
                             </Text>
                             <Text className="text-center text-lg text-gray-500 dark:text-gray-300">
                                 Humidity (%)
@@ -99,7 +103,7 @@ export default function AQIIndiv({
                         </View>
                         <View className="flex-1 items-center">
                             <Text className="text-6xl font-bold dark:text-neutral-100">
-                                {airData.pressure}
+                                {airData.sensors.pressure}
                             </Text>
                             <Text className="text-center text-lg text-gray-500 dark:text-gray-300">
                                 Pressure (hPa)

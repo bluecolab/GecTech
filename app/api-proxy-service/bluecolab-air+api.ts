@@ -1,7 +1,19 @@
-const API_URL = 'https://api.purpleair.com/v1/sensors';
-const API_TIMEOUT = 10000; // 10 seconds
+import { AirData } from '@/types/AirData';
 
-function aqiFromPM(pm: number): number | string {
+const API_URL = 'https://colabprod01.pace.edu/api/';
+
+const lat_long_map = {
+    Njord: {
+        latitude: 41.1308,
+        longitude: -73.810165,
+    },
+    Skadi: {
+        latitude: 41.124355,
+        longitude: -73.80812,
+    },
+};
+
+function aqiFromPM(pm: number): number | '-' {
     if (isNaN(pm)) return '-';
     if (pm === undefined) return '-';
     if (pm < 0) return pm;
@@ -41,40 +53,25 @@ function calcAQI(Cp: number, Ih: number, Il: number, BPh: number, BPl: number) {
     return Math.round((a / b) * c + Il);
 }
 
-async function getSensorData(sensorId: string, API_KEY: string, _READ_KEY?: string) {
-    if (!API_KEY) {
-        return null;
-    }
-
-    const headers = { 'X-API-Key': API_KEY };
-    const fields = [
-        'name',
-        'latitude',
-        'longitude',
-        'pm2.5_atm',
-        'pm2.5_10minute',
-        'humidity',
-        'temperature',
-        'pressure',
-        'last_seen',
-    ].join(',');
-
-    const params = new URLSearchParams({ fields });
-
-    const controller = new AbortController();
-    const timeout = setTimeout(() => controller.abort(), API_TIMEOUT);
+async function getSensorDatas() {
     try {
-        const response = await fetch(`${API_URL}/${sensorId}?${params.toString()}`, {
-            headers,
-            signal: controller.signal,
-        });
-        clearTimeout(timeout);
-        if (!response.ok) {
-            return await response.json();
+        const response = await fetch(`${API_URL}/aeolus/sensordata/`);
+        const data = (await response.json()) as AirData[];
+
+        // Required because:
+        //   A) Our internal API doesn't return lat/long for each sensor.
+        //      B) PurpleAir API doesn't return AQI, only PM2.5.
+        for (const sensor of data) {
+            if (sensor.station) {
+                const lat_long = lat_long_map[sensor.station as keyof typeof lat_long_map];
+                if (lat_long) {
+                    sensor.location = lat_long;
+                }
+            }
+            const pm2_5 = sensor.sensors['pm2.5_atm'];
+            sensor.sensors.us_aqi = aqiFromPM(pm2_5);
         }
-        const data = await response.json();
-        const sensorData = data.sensor || {};
-        return sensorData;
+        return data;
     } catch (error) {
         console.log('Error fetching PurpleAir data:', error);
         return error;
@@ -82,58 +79,6 @@ async function getSensorData(sensorId: string, API_KEY: string, _READ_KEY?: stri
 }
 
 export async function GET() {
-    const PURPLEAIR_API_KEY = process.env.PURPLEAIR_API_KEY ?? '';
-    const PURPLEAIR_READ_KEY = process.env.PURPLEAIR_READ_KEY ?? '';
-    const PURPLEAIR_SENSOR_IDS = process.env.PURPLEAIR_SENSOR_IDS?.split(',') || [];
-    const MOCK_DATA = process.env.MOCK_DATA === 'true';
-
-    if (MOCK_DATA) {
-        return Response.json([
-            {
-                name: 'Mock Sensor 1',
-                latitude: 0,
-                longitude: 0,
-                'pm2.5_atm': 0,
-                stats: { 'pm2.5_10minute': 0 },
-                last_seen: 0,
-                usAQI: aqiFromPM(0),
-                purpleAirMapEstimate: aqiFromPM(0),
-                humidity: 0,
-                temperature: 0,
-                pressure: 0,
-            },
-            {
-                name: 'Mock Sensor 2',
-                latitude: 0,
-                longitude: 0,
-                'pm2.5_atm': 0,
-                stats: { 'pm2.5_10minute': 0 },
-                last_seen: 0,
-                usAQI: aqiFromPM(0),
-                purpleAirMapEstimate: aqiFromPM(0),
-                humidity: 0,
-                temperature: 0,
-                pressure: 0,
-            },
-        ]);
-    }
-
-    // Only take the first two sensor IDs if more are present
-    const [sensorId1, sensorId2] = PURPLEAIR_SENSOR_IDS;
-    const results = [];
-
-    if (sensorId1) {
-        const res = await getSensorData(sensorId1, PURPLEAIR_API_KEY, PURPLEAIR_READ_KEY);
-        const usAQI = aqiFromPM(res['pm2.5_atm']);
-        const purpleAirMapEstimate = aqiFromPM(res['stats']['pm2.5_10minute']);
-        results.push({ ...res, usAQI, purpleAirMapEstimate });
-    }
-    if (sensorId2) {
-        const res = await getSensorData(sensorId2, PURPLEAIR_API_KEY, PURPLEAIR_READ_KEY);
-        const usAQI = aqiFromPM(res['pm2.5_atm']);
-        const purpleAirMapEstimate = aqiFromPM(res['stats']['pm2.5_10minute']);
-        results.push({ ...res, usAQI, purpleAirMapEstimate });
-    }
-
-    return Response.json(results);
+    const sensorData = await getSensorDatas();
+    return Response.json(sensorData);
 }
