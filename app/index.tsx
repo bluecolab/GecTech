@@ -35,7 +35,7 @@ export default function Home() {
             component: (
                 <iframe
                     className="mt-2"
-                    src="https://colabprod01.pace.edu/grafana/public-dashboards/36eb7ce712074b4e88518d4d48b44a16"
+                    src="https://colabprod01.pace.edu/grafana/public-dashboards/13a115c19f834d558ff535de84915b0b?orgId=1&refresh=15m"
                     style={{ width: '100%', height: '100%' }}></iframe>
             ),
         },
