@@ -106,7 +106,16 @@ Each of the above directories may be organized even further, grouped by similar 
 
 Deployment is handled by GitHub actions, a simple push to main is enough.
 
-## List of all dashboards
+## List of all dashboards - As of 9/17/2026
+
+- Alan ([WQI](https://colabprod01.pace.edu/grafana/public-dashboards/13a115c19f834d558ff535de84915b0b) & [Water Monitor](https://colabprod01.pace.edu/grafana/public-dashboards/36eb7ce712074b4e88518d4d48b44a16))
+- Ada (none)
+- Odin ([Weather Monitor](https://colabprod01.pace.edu/grafana/public-dashboards/a7650075b40145ff95085bf75bc4d0b5))
+- Njord ([AQI Monitor](https://colabprod01.pace.edu/grafana/public-dashboards/274f6fb0903b46cea4f9ed57163d5d24))
+- Skadi ([AQI Monitor](https://colabprod01.pace.edu/grafana/public-dashboards/61fbf92eb544422880ac1c493c9737f7))
+- [Global Data Staleness Monitor](https://colabprod01.pace.edu/grafana/public-dashboards/f72d2462b28f41e4abe0c7db3671461e)
+
+<!-- ## List of all dashboards
 
 - Weather - https://colabprod01.pace.edu/grafana/public-dashboards/139d29dc18204fa28d1b39ef672c45f5?orgId=1&from=now-2d&to=now&refresh=15m
 - Ada WQI - https://colabprod01.pace.edu/grafana/public-dashboards/28b52eaadf8041d490b3bca36f16101c?orgId=1&from=now-2d&to=now&refresh=15m
@@ -121,4 +130,4 @@ Deployment is handled by GitHub actions, a simple push to main is enough.
 - Water Monitor Schodack Landing (42.4996111, -73.7768056) - https://colabprod01.pace.edu/grafana/public-dashboards/fe42f9191cf84951be4eb2e96b046a1e?orgId=1&from=now-2d&to=now&refresh=15m
 - Water Monitor Albany (42.61952778, -73.7589167) - https://colabprod01.pace.edu/grafana/public-dashboards/1ca141bf9a394c86b9103c1812ec9b28?orgId=1&from=now-2d&to=now&refresh=15m
 - Water Monitor Botanical Garden/Bronx River (40.86230556, -73.8743888) - https://colabprod01.pace.edu/grafana/public-dashboards/9f36097dcd344550ac27631d91ad7994?orgId=1&from=now-2d&to=now&refresh=15m
-- Purple Air Stations: https://bluecolab.github.io/grafana-dashboard-gallery/purple-air-1/ (Softball Field), https://bluecolab.github.io/grafana-dashboard-gallery/purple-air-2 (Nature Center)
+- Purple Air Stations: https://bluecolab.github.io/grafana-dashboard-gallery/purple-air-1/ (Softball Field), https://bluecolab.github.io/grafana-dashboard-gallery/purple-air-2 (Nature Center) -->
